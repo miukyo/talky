@@ -290,7 +290,6 @@ Each entry under `lines:` can use these properties:
 - **Build Tool**: Maven 3.8+
 
 ```bash
-cd mcserver-plugin/talky
 mvn clean package
 ```
 
