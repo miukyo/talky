@@ -1,6 +1,6 @@
 # Talky
 
-**Talky** is a modern, Folia-ready cinematic NPC dialogue plugin for Paper 1.20+ and Paper 1.21+ (including Paper 26.2 build).
+**Talky** is a modern, Folia-ready cinematic NPC dialogue plugin built specifically for **Paper 26.2** running on **JDK 24** (or newer).
 
 It transforms NPC interactions into immersive cinematic dialogues featuring smooth camera rotation, camera locking, FOV zooming, blindness atmosphere, multiline chat styling with MiniMessage/PAPI, per-line command execution, and flexible progression modes (timer, click, sneak).
 
@@ -283,15 +283,15 @@ Each entry under `lines:` can use these properties:
 
 ---
 
-## Building from Source
+## Requirements & Building from Source
 
-Requirements:
-- Java 17+ (or JDK 21+)
-- Maven 3.8+
+- **Server**: Paper 26.2 build
+- **Java**: JDK 24 or newer (`maven.compiler.release`: 24)
+- **Build Tool**: Maven 3.8+
 
 ```bash
 cd mcserver-plugin/talky
 mvn clean package
 ```
 
-The compiled JAR will automatically output to `../../plugins/talky-1.0.0.jar`.
+The compiled JAR will output to `target/talky-1.0.0.jar`.
