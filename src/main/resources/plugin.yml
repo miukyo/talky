@@ -1,0 +1,18 @@
+name: Talky
+version: 1.0.0
+main: com.willowdale.talky.TalkyPlugin
+description: NPC dialogue and conversation plugin with FOV effects
+author: Zaid
+api-version: '26.2'
+softdepend: [PlaceholderAPI, FancyNpcs, Citizens]
+folia-supported: true
+
+commands:
+  talky:
+    description: Talky plugin management command
+    permission: talky.admin
+    usage: /talky <reload|list|start|stop>
+  talk:
+    description: Initiate or resume talk with an NPC
+    permission: talky.use
+    usage: /talk <dialogue_id>

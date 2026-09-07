@@ -1,0 +1,83 @@
+# =========================================================
+# Talky - Global Configuration
+# =========================================================
+# These values serve as defaults for any dialogue file in
+# plugins/Talky/talks/*.yml that does not override them.
+# =========================================================
+
+settings:
+  # Default line delay in ticks when not specified in a talk file (20 ticks = 1 second)
+  default-line-delay: 45
+
+  # FOV Zoom settings
+  fov:
+    # Whether to zoom the camera when conversation starts (uses subtle slowness effect)
+    enabled: true
+    # Amplifier for Slowness effect:
+    #   0 = slight zoom
+    #   1 = noticeable zoom
+    #   2 = dramatic cinematic zoom (recommended)
+    amplifier: 2
+
+  # Blindness effect settings
+  blindness:
+    # Whether to apply blindness fog to focus player attention on the speaking NPC
+    enabled: true
+
+  # Movement cancellation settings
+  movement:
+    # Whether walking away cancels the active dialogue
+    cancel-on-move: true
+    # Distance in blocks player can move from anchored spot before cancelling
+    move-threshold: 0.8
+    # Grace period in ticks on talk initiation (25 ticks = 1.25s)
+    # Allows players running towards NPC or holding 'W' to settle without instant cancel
+    initiation-grace-ticks: 25
+    # Message shown to player when walking away cancels dialogue (supports MiniMessage)
+    cancel-message: "<red><i>You walked away and ended the conversation.</i></red>"
+    # Sound played on movement cancel (sound key, leave empty to disable)
+    cancel-sound: "block.fire.extinguish"
+
+  # Interaction & Camera settings
+  interaction:
+    # Lock player camera yaw & pitch to NPC eye level (body can still move, camera stays on NPC)
+    lock-camera: true
+    # Duration in ticks spent smoothly panning camera to NPC eye level (20 ticks = 1 second)
+    camera-smooth-ticks: 12
+
+  # Whether taking damage cancels the active talk
+  cancel-on-damage: true
+
+  # Dialogue advancement settings
+  advance:
+    # Progression mode:
+    #   HYBRID = Auto-advances based on line delay; player can also click/sneak to skip ahead (recommended)
+    #   MANUAL = Strictly pauses on every line; waits for player click/sneak
+    #   AUTO   = Strictly timed; advances only on delay, ignoring player clicks/sneaks
+    mode: HYBRID
+
+    # If true in HYBRID or MANUAL mode, pressing Sneak (Shift) advances to the next line
+    advance-on-sneak: true
+
+    # If true in HYBRID or MANUAL mode, left or right clicking advances to the next line
+    advance-on-click: true
+
+# Dialogue chat appearance
+chat:
+  # Optional header sent to player when conversation starts (leave empty for none)
+  header: ""
+  # Optional footer sent to player when conversation ends (leave empty for none)
+  footer: ""
+  # Separator line format if used
+  separator: "<dark_gray>----------------------------------------</dark_gray>"
+
+# System messages (supports MiniMessage and PlaceholderAPI)
+messages:
+  prefix: "<gold><bold>Talky</bold></gold> <dark_gray>»</dark_gray> "
+  already-talking: "<red>You are already in a conversation! Finish or walk away to end it.</red>"
+  talk-not-found: "<red>Conversation '%talk%' not found.</red>"
+  cooldown: "<gray>The NPC is busy. Please wait <gold>%time%s</gold>.</gray>"
+  no-permission: "<red>You do not have permission to talk to this NPC.</red>"
+  reloaded: "<green>Talky configuration and dialogues reloaded successfully!</green>"
+  player-only: "<red>This command can only be run by a player.</red>"
+  stopped: "<yellow>Conversation has been stopped.</yellow>"

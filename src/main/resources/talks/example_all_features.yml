@@ -1,0 +1,157 @@
+# =========================================================
+# Talky - Exhaustive Example Dialogue File
+# =========================================================
+# This file showcases every single configurable setting in Talky.
+# Duplicate and customize this template to create new dialogues.
+# =========================================================
+
+# Unique identifier matching file name (without .yml)
+id: example_all_features
+
+# Human-readable title (used in admin command lists)
+title: "Exhaustive Dialogue Example"
+
+# List of NPC or entity display names that trigger this conversation on right-click.
+# Matches:
+#   - Citizens NPC display names
+#   - FancyNpcs display names
+#   - Named vanilla mobs, villagers, interaction entities
+npc-names:
+  - "Town Mayor"
+  - "Mayor"
+  - "npc_mayor"
+
+# Cooldown in seconds per player before this talk can be triggered again.
+# Set to 0 to disable cooldown.
+cooldown: 5
+
+# Permission node required to trigger this dialogue.
+# Leave empty ("") to allow all players to talk.
+permission: "talky.dialogue.mayor"
+
+# ---------------------------------------------------------
+# Visual & Cinematic Settings
+# ---------------------------------------------------------
+
+# FOV zoom settings (applies slowness effect to zoom camera smoothly)
+fov:
+  # Enable or disable FOV zoom for this specific talk
+  enabled: true
+  # Slowness amplifier (0 = slight zoom, 1 = moderate zoom, 2 = dramatic zoom)
+  amplifier: 2
+
+# Blindness effect settings (cinematic dark fog focusing player attention on NPC)
+blindness:
+  # Enable or disable blindness fog for this specific talk
+  enabled: true
+
+# Camera locking & smoothing settings
+interaction:
+  # Lock player camera yaw & pitch to NPC eye level (body can still move, camera stays on NPC)
+  lock-camera: true
+  # Number of ticks spent smoothly panning camera to NPC eye level on talk start (20 ticks = 1 sec)
+  camera-smooth-ticks: 12
+
+# Movement cancellation settings
+movement:
+  # Whether walking away cancels the active dialogue
+  cancel-on-move: true
+  # Distance in blocks player can walk from initial anchor position before talk cancels
+  move-threshold: 0.8
+  # Grace period in ticks on start (allows players sprinting/running towards NPC to settle without instant cancel)
+  initiation-grace-ticks: 25
+  # Message shown to player when walking away cancels conversation (MiniMessage supported)
+  cancel-message: "<red><i>You walked away and the mayor lost interest.</i></red>"
+  # Sound played when conversation is cancelled by movement (leave empty to disable)
+  cancel-sound: "block.fire.extinguish"
+
+# ---------------------------------------------------------
+# Advancement Settings
+# ---------------------------------------------------------
+
+advance:
+  # Progression mode:
+  #   HYBRID = Automatically advances after line delay; player can also click/sneak to skip ahead
+  #   MANUAL = Strictly pauses on every line; advances only when player clicks/sneaks
+  #   AUTO   = Strictly timed; advances only when delay expires, ignoring clicks/sneaks
+  mode: HYBRID
+
+  # If true in HYBRID or MANUAL mode, pressing Sneak (Shift) advances to the next line
+  advance-on-sneak: true
+
+  # If true in HYBRID or MANUAL mode, left or right clicking advances to the next line
+  advance-on-click: true
+
+# ---------------------------------------------------------
+# Dialogue Lines
+# ---------------------------------------------------------
+# Each entry is delivered sequentially.
+# Available properties per line:
+#   text     : String OR YAML list of strings (supports MiniMessage, PAPI, empty strings for blank lines)
+#   delay    : Duration in ticks before next line delivers (default from config.yml if omitted)
+#   manual   : Set to true to force a pause on this line until player clicks/sneaks (overrides delay)
+#   sound    : Sound played when this line appears (vanilla sound key)
+#   commands : List of commands to execute when this line appears
+#   command  : Single command to execute when this line appears
+#
+# Command prefixes:
+#   [console] <command>  (or no prefix) -> Runs from server console
+#   [player] <command>                  -> Runs as interacting player
+# Placeholders in commands and text:
+#   %player%      -> Player username
+#   %npc%         -> Interacting NPC name
+#   PAPI          -> Any PlaceholderAPI placeholder if installed (%vault_eco_balance%, %oraxen_...%)
+
+lines:
+  # Example 1: Multiline text block with custom sound, custom delay, and commands
+  - text:
+      - ""
+      - "<gold><bold>[Mayor]</bold></gold> <yellow>Greetings, %player%! Welcome to our humble township.</yellow>"
+      - "<gray>I have been expecting someone of your caliber.</gray>"
+      - ""
+    delay: 45
+    sound: "entity.villager.ambient"
+    commands:
+      - "[console] effect give %player% speed 4 0 true"
+      - "[player] me bows politely"
+
+  # Example 2: Interactive link using MiniMessage click & hover events
+  - text:
+      - "<white>Before we begin, consider joining our community chat:</white>"
+      - "<click:open_url:'https://discord.gg/hrc'><hover:show_text:'<yellow>Click to join Discord!</yellow>'><gold><u>[Click here to visit our Discord]</u></gold></click>"
+    delay: 50
+    sound: "entity.villager.ambient"
+
+  # Example 3: Manual pause (waits until player clicks or sneaks before moving on)
+  - text: "<white>Press <yellow>Shift</yellow> or click anywhere once you are ready for your assignment.</white>"
+    manual: true
+    sound: "entity.villager.trade"
+
+  # Example 4: Rewarding line with command execution
+  - text: "<green>Take these supplies for the journey ahead.</green>"
+    delay: 40
+    sound: "entity.villager.yes"
+    commands:
+      - "[console] give %player% bread 5"
+      - "[console] give %player% apple 3"
+
+  # Example 5: Simple string line (uses default line delay from config.yml)
+  - text: "<gold><bold>[Mayor]</bold></gold> <yellow>Return to me when your mission is complete.</yellow>"
+    sound: "entity.villager.celebrate"
+
+# ---------------------------------------------------------
+# Completion Actions
+# ---------------------------------------------------------
+# Triggered when player finishes all dialogue lines.
+
+on-complete:
+  # Sound played to player upon completion
+  sound: "ui.toast.challenge_complete"
+
+  # Optional message sent to player upon completion (leave empty for none)
+  message: "<green><bold>Town Introduction Complete!</bold></green>"
+
+  # Commands executed on completion
+  commands:
+    - "[console] experience add %player% 25 points"
+    - "[console] title %player% subtitle {\"text\":\"Welcome to Willowdale!\",\"color\":\"gold\"}"
